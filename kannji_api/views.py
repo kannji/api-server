@@ -4,10 +4,10 @@ from .models import Kanji, KanjiReadings, KanjiMeanings
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("Hello, you are at the Kannji api index.")
 
 def get_all_kanji(request):
-    
+
     responseJson = {}
 
     kanjis = Kanji.objects.all()
@@ -22,7 +22,7 @@ def get_kanji(response, kanji_id):
     return JsonResponse(get_kanji_object(kanji))
 
 def get_kanji_object(kanji):
-    
+
     responseJson = {}
 
     # getting Kanji information
@@ -32,7 +32,7 @@ def get_kanji_object(kanji):
 
     # getting the readings
     readings = kanji.kanji_readings_set.all()
-    
+
     responseJson['readings'] = {}
 
     for reading in readings:
