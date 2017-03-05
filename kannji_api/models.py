@@ -13,6 +13,9 @@ class Kanji(models.Model):
     kanji_id = models.BigAutoField(primary_key=True)
     literal = models.CharField(max_length=1)
     stroke_count = models.PositiveSmallIntegerField()
+    jlpt_level = models.PositiveSmallIntegerField()
+    school_grade = models.PositiveSmallIntegerField()
+    frequency = models.PositiveSmallIntegerField()
 
     class Meta:
         managed = False
@@ -50,3 +53,17 @@ class KanjiReadings(models.Model):
 
     def __str__(self):
         return self.reading
+
+class KanjiRadicals(models.Model):
+    radical_id = models.BigAutoField(primary_key=True)
+    kanji_id = models.ForeignKey(Kanji, db_column='kanji_id', related_name='kanji_radicals_set', on_delete=models.CASCADE)
+    radical = models.PositiveSmallIntegerField()
+    type = models.CharField(max_length=20)
+
+    class Meta:
+        managed = False
+        db_table = 'kanji_radicals'
+        unique_together = (('radical_id', 'kanji_id'), ('kanji_id', 'radical', 'type'),)
+
+    def __str__(self):
+        return self.radical
