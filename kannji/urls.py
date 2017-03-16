@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^kannji/api/', include('kannji_api.urls')),
-    url(r'^kannji/update/kanjidic2', include('kanjidic2_parser.urls')),
+    url(r'^kannji/kanjidic2/', include('kanjidic2_parser.urls')),
+    url(r'^kannji/jmdict/', include('jmdict_parser.urls')),
     url(r'^admin/', admin.site.urls),
 ]
