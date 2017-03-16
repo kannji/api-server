@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, JsonResponse
-from .models import Kanji, KanjiReadings, KanjiMeanings
+from .kanji_model import Kanji, KanjiReadings, KanjiMeanings
 
 def index(request):
     return HttpResponse("Hello, you are at the Kannji api index.")

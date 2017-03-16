@@ -2,7 +2,7 @@ import time
 from parser.parsing_helper import xpathGetInt, xpathGetStr
 from django.http import HttpResponse, JsonResponse
 from lxml import etree
-from kannji_api.models import Kanji, KanjiReadings, KanjiMeanings, KanjiRadicals
+from kannji_api.kanji_model import Kanji, KanjiReadings, KanjiMeanings, KanjiRadicals
 from django.db import connection,transaction
 
 
