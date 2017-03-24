@@ -12,27 +12,27 @@ from django.db import models
 from kannji_api.kanji_model import Kanji
 
 
-class Lists(models.Model):
+class LearningLists(models.Model):
     list_id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=2000, blank=True, null=True)
     thumbnail_url = models.CharField(max_length=300, blank=True, null=True)
     kanji = models.ManyToManyField(
         Kanji,
-        through='ListEntries',
+        through='LearningListEntries',
         through_fields=('list', 'kanji')
     )
 
     class Meta:
         managed = False
-        db_table = 'lists'
+        db_table = 'learning_lists'
 
 
-class ListEntries(models.Model):
+class LearningListEntries(models.Model):
     entry_id = models.BigAutoField(primary_key=True)
-    list = models.ForeignKey('Lists', models.DO_NOTHING)
+    list = models.ForeignKey('LearningLists', models.DO_NOTHING)
     kanji = models.ForeignKey(Kanji, models.DO_NOTHING)
 
     class Meta:
         managed = False
-        db_table = 'list_entries'
+        db_table = 'learning_list_entries'

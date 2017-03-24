@@ -2,13 +2,13 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 from kannji_api.kanji import get_kanji_object
-from kannji_api.list_model import Lists
+from kannji_api.list_model import LearningLists
 
 
 def get_list(response, list_id):
 
     # get list
-    learning_list = get_object_or_404(Lists, list_id=list_id)
+    learning_list = get_object_or_404(LearningLists, list_id=list_id)
 
     return JsonResponse(get_learning_list_object(learning_list))
 
@@ -16,7 +16,7 @@ def get_list(response, list_id):
 def get_all_lists_brief(response):
 
     # get list
-    learning_lists = Lists.objects.all()
+    learning_lists = LearningLists.objects.all()
 
     learning_lists_object = {}
 
