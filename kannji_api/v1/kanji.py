@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, JsonResponse
-from .kanji_model import Kanji, KanjiReadings, KanjiMeanings
+from kannji_api.kanji_model import Kanji, KanjiReadings, KanjiMeanings
 
-
+def index(request):
+    return HttpResponse("Hello, you are at the Kannji api index.")
 
 def search_kanji(request, searchQuery, maxResults):
     kanji = Kanji.objects.filter(literal__search=searchQuery)[:5]
@@ -19,8 +20,6 @@ def search_kanji(request, searchQuery, maxResults):
         kanji_readings.reading LIKE "to go" OR
         kanji_meanings.meaning LIKE "to go"
     """
-
-
 
 
 def get_all_kanji(request):
