@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
-from kannji_api.kanji import get_kanji_object
+from kannji_api.v1.kanji import get_kanji_object
 from kannji_api.list_model import LearningLists
 
 
@@ -41,7 +41,6 @@ def get_learning_list_object(learning_list):
     learningListObject['entries'] = {}
 
     # add kanji to the list
-    # TODO what to do with big lists?
     kanji = learning_list.kanji.all()
 
     for current_kanji in kanji:

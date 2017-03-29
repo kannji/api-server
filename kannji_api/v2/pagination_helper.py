@@ -3,12 +3,18 @@ from django.core.paginator import Paginator
 from kannji_api.v1.general_values import DEFAULT_PAGE_INDEX, DEFAULT_PAGE_SIZE
 
 
+def get_paging_from_request(request):
+    return request.GET.get('paging', "")
+
+
 def get_page_index_from_request(request):
-    return request.POST.get('page_number', DEFAULT_PAGE_INDEX)
+    paging = get_paging_from_request(request)
+    return paging.split(':')[0]
 
 
 def get_page_size_from_request(request):
-    return request.POST.get('page_size', DEFAULT_PAGE_SIZE)
+    paging = get_paging_from_request(request)
+    return paging.split(':')[1]
 
 
 def get_paginator(query_set, request):
