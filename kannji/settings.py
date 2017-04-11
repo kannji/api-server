@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'kannji.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql_psycopg2',
-		'NAME': 'kannji',
-		'USER': 'kannji',
-		'PASSWORD': 'changeme',
+		'NAME': os.environ.get('API_DB_DBNAME', ''),
+		'USER': os.environ.get('API_DB_USER', ''),
+		'PASSWORD': os.environ.get('API_DB_PASSWORD', ''),
 		'HOST': 'kannji_api-db_1',
 		'PORT': '',
 	}
