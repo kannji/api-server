@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-	url(r'^kannji/api/', include('kannji_api.urls')),
+	url(r'^/', include('kannji_api.urls')),
 	url(r'^kannji/jlpt_list_creator/', include('jlpt_list_creator.urls')),
 	url(r'^kannji/kanjidic2/', include('kanjidic2_parser.urls')),
 	url(r'^kannji/jmdict/', include('jmdict_parser.urls')),

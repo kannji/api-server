@@ -26,7 +26,7 @@ SECRET_KEY = 'kahj0ic+7weko=x3wt)eo2uh7b0fwjpgl13j5q2by+&+ie=54y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['217.182.128.241']
+ALLOWED_HOSTS = ['api.dontusethisinporduction.fail']
 
 # Application definition
 
@@ -79,7 +79,7 @@ DATABASES = {
 		'NAME': 'kannji',
 		'USER': 'kannji',
 		'PASSWORD': 'changeme',
-		'HOST': 'kannji-api-db',
+		'HOST': 'kannji_api-db_1',
 		'PORT': '',
 	}
 }
