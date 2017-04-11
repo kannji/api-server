@@ -4,7 +4,7 @@ from django.db import connection
 from django.http import HttpResponse
 from lxml import etree
 
-from kannji_api.kanji_model import Kanji, KanjiReadings, KanjiMeanings, KanjiRadicals
+from kannji_api.models import Kanji, KanjiReadings, KanjiMeanings, KanjiRadicals
 from parser.parsing_helper import xpathGetInt, xpathGetStr
 
 

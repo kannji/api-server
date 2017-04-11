@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 
-from kannji_api.kanji_model import Kanji
+from kannji_api.models import Kanji
 
 
 def index(request):
