@@ -26,7 +26,7 @@ SECRET_KEY = 'kahj0ic+7weko=x3wt)eo2uh7b0fwjpgl13j5q2by+&+ie=54y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api.dontusethisinporduction.fail']
+ALLOWED_HOSTS = ['api.dontusethisinproduction.fail']
 
 # Application definition
 
