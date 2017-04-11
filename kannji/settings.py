@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
-import passwords
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,12 +19,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'kahj0ic+7weko=x3wt)eo2uh7b0fwjpgl13j5q2by+&+ie=54y'
+SECRET_KEY = os.environ.get('API_SERVER_SECRET_KEY', ''),
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['217.182.128.241']
+ALLOWED_HOSTS = ['api.dontusethisinproduction.fail']
 
 # Application definition
 
@@ -75,12 +73,12 @@ WSGI_APPLICATION = 'kannji.wsgi.application'
 
 DATABASES = {
 	'default': {
-		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'kannji',
-		'USER': 'root',
-		'PASSWORD': passwords.MARIA_DB_PW,
-		'HOST': '217.182.128.241',
-		'PORT': '3306',
+		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+		'NAME': os.environ.get('API_DB_DBNAME', ''),
+		'USER': os.environ.get('API_DB_USER', ''),
+		'PASSWORD': os.environ.get('API_DB_PASSWORD', ''),
+		'HOST': 'kannji_api-db_1',
+		'PORT': '',
 	}
 }
 

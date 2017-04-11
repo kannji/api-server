@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
-from kannji_api.list_model import LearningLists
+from kannji_api.models import LearningLists
 from kannji_api.v1.kanji import get_kanji_object
 
 
