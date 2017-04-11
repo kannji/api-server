@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 
 from kannji_api.kanji_model import Kanji
-from kannji_api.list_model import LearningLists, LearningListEntries
+from kannji_api.list_model import LearningLists
 
 
 def createJlptLists(response):
