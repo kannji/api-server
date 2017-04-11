@@ -47,24 +47,24 @@ def addKanjiFromXml(literal, character):
 		# add foreign info
 		# radicals
 		for radical in character.xpath("radical/rad_value"):
-			KanjiRadicals(kanji_id=kanji, radical=radical.text, type=radical.attrib.get("rad_type")).save()
+			KanjiRadicals(kanji=kanji, radical=radical.text, type=radical.attrib.get("rad_type")).save()
 		
 		# readings
 		# on
 		for reading in character.xpath("reading_meaning/rmgroup/reading[@r_type='ja_on']/text()"):
-			KanjiReadings(kanji_id=kanji, reading=reading, type="onyomi").save()
+			KanjiReadings(kanji=kanji, reading=reading, type="onyomi").save()
 		
 		# kun
 		for reading in character.xpath("reading_meaning/rmgroup/reading[@r_type='ja_kun']/text()"):
-			KanjiReadings(kanji_id=kanji, reading=reading, type="kunyomi").save()
+			KanjiReadings(kanji=kanji, reading=reading, type="kunyomi").save()
 		
 		# nanori
 		for reading in character.xpath("reading_meaning/nanori/text()"):
-			KanjiReadings(kanji_id=kanji, reading=reading, type="nanori").save()
+			KanjiReadings(kanji=kanji, reading=reading, type="nanori").save()
 		
 		# meanings
 		for meaning in character.xpath("reading_meaning/rmgroup/meaning[not(@m_lang)]/text()"):
-			KanjiMeanings(kanji_id=kanji, meaning=meaning, language="en-GB").save()
+			KanjiMeanings(kanji=kanji, meaning=meaning, language="en-GB").save()
 		
 		return True
 	else:

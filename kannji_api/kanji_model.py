@@ -18,25 +18,18 @@ class Kanji(models.Model):
 	school_grade = models.PositiveSmallIntegerField()
 	frequency = models.PositiveSmallIntegerField()
 	
-	class Meta:
-		managed = False
-		db_table = 'kanji'
-	
 	def __str__(self):
 		return self.literal
 
 
 class KanjiMeanings(models.Model):
 	meaning_id = models.BigAutoField(primary_key=True)
-	kanji_id = models.ForeignKey(Kanji, db_column='kanji_id', related_name='kanji_meanings_set',
-	                             on_delete=models.CASCADE)
+	kanji = models.ForeignKey(Kanji, related_name='kanji_meanings_set', on_delete=models.CASCADE)
 	meaning = models.CharField(max_length=200, blank=True, null=True)
 	language = models.CharField(max_length=7, blank=True, null=True)
 	
 	class Meta:
-		managed = False
-		db_table = 'kanji_meanings'
-		unique_together = (('meaning_id', 'kanji_id'), ('kanji_id', 'meaning', 'language'),)
+		unique_together = (('meaning_id', 'kanji'), ('kanji', 'meaning', 'language'),)
 	
 	def __str__(self):
 		return self.meaning
@@ -44,15 +37,12 @@ class KanjiMeanings(models.Model):
 
 class KanjiReadings(models.Model):
 	reading_id = models.BigAutoField(primary_key=True)
-	kanji_id = models.ForeignKey(Kanji, db_column='kanji_id', related_name='kanji_readings_set',
-	                             on_delete=models.CASCADE)
+	kanji = models.ForeignKey(Kanji, related_name='kanji_readings_set', on_delete=models.CASCADE)
 	reading = models.CharField(max_length=20)
 	type = models.CharField(max_length=7)
 	
 	class Meta:
-		managed = False
-		db_table = 'kanji_readings'
-		unique_together = (('reading_id', 'kanji_id'), ('kanji_id', 'reading', 'type'),)
+		unique_together = (('reading_id', 'kanji'), ('kanji', 'reading', 'type'),)
 	
 	def __str__(self):
 		return self.reading
@@ -60,15 +50,12 @@ class KanjiReadings(models.Model):
 
 class KanjiRadicals(models.Model):
 	radical_id = models.BigAutoField(primary_key=True)
-	kanji_id = models.ForeignKey(Kanji, db_column='kanji_id', related_name='kanji_radicals_set',
-	                             on_delete=models.CASCADE)
+	kanji = models.ForeignKey(Kanji, related_name='kanji_radicals_set', on_delete=models.CASCADE)
 	radical = models.PositiveSmallIntegerField()
 	type = models.CharField(max_length=20)
 	
 	class Meta:
-		managed = False
-		db_table = 'kanji_radicals'
-		unique_together = (('radical_id', 'kanji_id'), ('kanji_id', 'radical', 'type'),)
+		unique_together = (('radical_id', 'kanji'), ('kanji', 'radical', 'type'),)
 	
 	def __str__(self):
 		return self.radical

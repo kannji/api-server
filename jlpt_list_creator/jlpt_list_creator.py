@@ -20,6 +20,4 @@ def createJlptListByNiveau(niveau):
 	jlptList.save()
 	
 	for kanji in jlptKanji:
-		entry = LearningListEntries(list_id=jlptList.list_id, kanji_id=kanji.kanji_id)
-		entry.save()
-		jlptList.listentries_set.add(entry)
+		jlptList.kanji.add(kanji)
