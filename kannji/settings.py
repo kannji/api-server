@@ -28,7 +28,7 @@ DEBUG = os.environ.get('DEBUG', ''),
 ALLOWED_HOSTS = None
 if DEBUG:
 	# when debug mode is on, allow all incoming connections
-	ALLOWED_HOSTS = ['0.0.0.0']
+	ALLOWED_HOSTS = ['*']
 else:
 	# when debug is off, use real host
 	ALLOWED_HOSTS = [os.environ.get('HOST', '')]
