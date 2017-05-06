@@ -22,16 +22,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('API_SERVER_SECRET_KEY', ''),
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', ''),
+DEBUG = False
+if os.environ.get('DEBUG', '') in ['True', 'true', '1']:
+	DEBUG = True
 
 # set allowed hosts
-ALLOWED_HOSTS = None
+ALLOWED_HOSTS = [os.environ.get('HOST', '')]
 if DEBUG:
 	# when debug mode is on, allow all incoming connections
 	ALLOWED_HOSTS = ['*']
-else:
-	# when debug is off, use real host
-	ALLOWED_HOSTS = [os.environ.get('HOST', '')]
+	
 
 # Application definition
 INSTALLED_APPS = [
