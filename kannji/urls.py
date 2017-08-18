@@ -1,4 +1,5 @@
-"""kannji URL Configuration
+"""
+kannji URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -15,11 +16,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from kannji.settings import DEBUG
 
 urlpatterns = [
 	url(r'^', include('kannji_api.urls')),
 	url(r'^kannji/jlpt_list_creator/', include('jlpt_list_creator.urls')),
 	url(r'^kannji/kanjidic2/', include('kanjidic2_parser.urls')),
-	url(r'^kannji/jmdict/', include('jmdict_parser.urls')),
-	url(r'^admin/', admin.site.urls),
+	url(r'^kannji/jmdict/', include('jmdict_parser.urls'))
 ]
+
+if DEBUG:
+	urlpatterns.append(url(r'^admin/', admin.site.urls))
