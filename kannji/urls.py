@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+
 from kannji.settings import DEBUG
 
 urlpatterns = [
 	url(r'^', include('kannji_api.urls')),
 	url(r'^kannji/jlpt_list_creator/', include('jlpt_list_creator.urls')),
 	url(r'^kannji/kanjidic2/', include('kanjidic2_parser.urls')),
-	url(r'^kannji/jmdict/', include('jmdict_parser.urls'))
+	url(r'^kannji/jmdict/', include('jmdict_parser.urls')),
+	url(r'^kannji/kana-init/', include('kana_initialiser.urls'))
 ]
 
 if DEBUG:
