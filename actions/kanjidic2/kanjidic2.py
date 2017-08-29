@@ -8,7 +8,7 @@ from kannji_api.models import Kanji, KanjiReadings, KanjiMeanings, KanjiRadicals
 from parser.parsing_helper import xpathGetInt, xpathGetStr
 
 
-def clearDatabase(request):
+def clear_database(request):
 	Kanji.objects.all().delete()
 	KanjiMeanings.objects.all().delete()
 	KanjiReadings.objects.all().delete()
@@ -21,24 +21,24 @@ def clearDatabase(request):
 		cursor.execute("ALTER TABLE `kanji_radicals` AUTO_INCREMENT = 1;")
 
 
-def rebuildDatabase(request):
-	clearDatabase(request)
-	return updateDatabase(request)
+def rebuild_database(request):
+	clear_database(request)
+	return update_database(request)
 
 
-def addKanjiFromXml(literal, character):
+def add_kanji_from_xml(literal, character):
 	# get all kanji info
 	stroke_count = xpathGetInt(character, "misc/stroke_count")
-	jlptLevel = xpathGetInt(character, "misc/jlpt")
-	schoolGrade = xpathGetInt(character, "misc/grade")
+	jlpt_level = xpathGetInt(character, "misc/jlpt")
+	school_grade = xpathGetInt(character, "misc/grade")
 	frequency = xpathGetInt(character, "misc/freq")
 	
 	# add the kanji to the db
 	kanji = Kanji(
 		literal=literal,
 		stroke_count=stroke_count,
-		jlpt_level=jlptLevel,
-		school_grade=schoolGrade,
+		jlpt_level=jlpt_level,
+		school_grade=school_grade,
 		frequency=frequency
 	)
 	kanji.save()
@@ -73,19 +73,20 @@ def addKanjiFromXml(literal, character):
 		return False
 
 
-def updateKanjiFromXml(literal, character):
+def update_kanji_from_xml(literal, character):
+	# TODO: actually update the kanji
 	pass
 
 
-def updateDatabase(request):
+def update_database(request):
 	# some statistics
-	startTime = time.time()
-	updateCount = 0
-	updateList = []
-	addCount = 0
-	addedList = []
-	skipCount = 0
-	skipList = []
+	start_time = time.time()
+	update_count = 0
+	update_list = []
+	add_count = 0
+	added_list = []
+	skip_count = 0
+	skip_list = []
 	
 	# looping through all characters (kanji) in xml file
 	# i = 0
@@ -99,33 +100,33 @@ def updateDatabase(request):
 		
 		# try getting the kanji from db
 		if Kanji.objects.filter(literal=literal).exists():
-			updateKanjiFromXml(literal, character)
-			updateCount += 1
-			updateList.append(literal)
+			update_kanji_from_xml(literal, character)
+			update_count += 1
+			update_list.append(literal)
 		else:
-			kanjiAdded = addKanjiFromXml(literal, character)
-			if kanjiAdded:
-				addCount += 1
-				addedList.append(literal)
+			kanji_added = add_kanji_from_xml(literal, character)
+			if kanji_added:
+				add_count += 1
+				added_list.append(literal)
 			else:
-				skipCount += 1
-				skipList.append(literal)
+				skip_count += 1
+				skip_list.append(literal)
 		
 		# clear the character to save ram
 		character.clear()
 	
 	# some statistics
-	endTime = time.time()
+	end_time = time.time()
 	
 	return HttpResponse(
-		'updated:' + str(updateCount) + '<br>\n' +
-		'added:' + str(addCount) + '<br>\n' +
-		'skipped:' + str(skipCount) + '<br>\n' +
-		'Time needed: ' + str(endTime - startTime) + '<br><br>\n' +
+		'updated:' + str(update_count) + '<br>\n' +
+		'added:' + str(add_count) + '<br>\n' +
+		'skipped:' + str(skip_count) + '<br>\n' +
+		'Time needed: ' + str(end_time - start_time) + '<br><br>\n' +
 		'updated kanji: <br>\n' +
-		', '.join(updateList) + '<br><br>\n' +
+		', '.join(update_list) + '<br><br>\n' +
 		'addded kanji: <br>\n' +
-		', '.join(addedList) + '<br><br>\n' +
+		', '.join(added_list) + '<br><br>\n' +
 		'skipped kanji: <br>\n' +
-		', '.join(skipList) + '<br><br>\n'
+		', '.join(skip_list) + '<br><br>\n'
 	)
