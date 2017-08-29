@@ -1,4 +1,4 @@
-from kannji_api.models.kana import Kana, Hiragana, Katakana
+from kannji_api.models.kana import Kana
 
 kana_list = [
 	{'hiragana_literal': 'あ', 'katakana_literal': 'ア', 'transliteration': 'a', 'type': Kana.MONOGRAPH_CODE},
@@ -114,25 +114,3 @@ kana_list = [
 	{'hiragana_literal': 'ぴゅ', 'katakana_literal': 'ピュ', 'transliteration': 'pyu', 'type': Kana.DIACRITIC_DIGRAPH_CODE},
 	{'hiragana_literal': 'ぴょ', 'katakana_literal': 'ピョ', 'transliteration': 'pyo', 'type': Kana.DIACRITIC_DIGRAPH_CODE}
 ]
-
-
-def initialise_kana(request):
-	
-	for kana in kana_list:
-		curr_hiragana = Hiragana(
-			literal=kana['hiragana_literal'],
-			transliteration=kana['transliteration'],
-			type=kana['type']
-		)
-		curr_hiragana.save()
-		
-		curr_katakana = Katakana(
-			literal=kana['katakana_literal'],
-			transliteration=kana['transliteration'],
-			type=kana['type'],
-			corresponding_hiragana=curr_hiragana
-		)
-		curr_katakana.save()
-		
-		curr_hiragana.corresponding_katakana = curr_katakana
-		curr_hiragana.save()
