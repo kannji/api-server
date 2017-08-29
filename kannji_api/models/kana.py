@@ -44,16 +44,29 @@ class Kana(models.Model):
 	)
 	
 	# the unique id of the kana
-	kana_id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+	kana_uuid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
 	
 	# the actual character
-	literal = models.CharField(max_length=1)
+	literal = models.CharField(max_length=2, editable=False)
 	
 	# how you write the character in latin letters (romaji)
 	transliteration = models.CharField(max_length=4)
 	
 	# the type of the character (monograph, diacritic, digraph, diacritic-digraph)
 	type = models.CharField(max_length=2, choices=TYPE_CHOICES)
+	
+	# the id of the corresponding Monograph
+	# e.g. for the diacritic gi (ぎ), the digraph kyo (きょ) and the diacritic-digraph (ぎょ)
+	# this will hold the uuid of the monograph ki (き)
+	monograph = models.ForeignKey('self', related_name='monograph_uuid', null=True)
+	
+	# the id of the corresponding Diacritic
+	# e.g. for the diacritic-digraph gyo (ぎょ) this will hold the uuid of the diacritic ki (ぎ)
+	diacritic = models.ForeignKey('self', related_name='diacritic_uuid', null=True)
+	
+	# the id of the corresponding Digraph
+	# e.g. for the diacritic-digraph gyo (ぎょ) this will hold the uuid of the digraph ki (きょ)
+	digraph = models.ForeignKey('self', related_name='digraph_uuid', null=True)
 	
 	def __str__(self):
 		return self.literal
@@ -63,34 +76,8 @@ class Kana(models.Model):
 
 
 class Hiragana(Kana):
-	# the id of the corresponding Monograph
-	# e.g. for the diacritic gi (ぎ), the digraph kyo (きょ) and the diacritic-digraph (ぎょ)
-	# this will hold the uuid of the monograph ki (き)
-	monograph = models.ForeignKey('self', related_name='monograph_uuid')
-	
-	# the id of the corresponding Diacritic
-	# e.g. for the diacritic-digraph gyo (ぎょ) this will hold the uuid of the diacritic ki (ぎ)
-	diacritic = models.ForeignKey('self', related_name='diacritic_uuid')
-	
-	# the id of the corresponding Digraph
-	# e.g. for the diacritic-digraph gyo (ぎょ) this will hold the uuid of the digraph ki (きょ)
-	digraph = models.ForeignKey('self', related_name='digraph_uuid')
-	
-	corresponding_katakana = models.ForeignKey('kannji_api.Katakana')
+	corresponding_katakana = models.OneToOneField('kannji_api.Katakana', null=True)
 
 
 class Katakana(Kana):
-	# the id of the corresponding Monograph
-	# e.g. for the diacritic gi (ギ), the digraph kyo (キョ) and the diacritic-digraph (ギョ)
-	# this will hold the uuid of the monograph ki (キ)
-	monograph = models.ForeignKey('self', related_name='monograph_uuid')
-	
-	# the id of the corresponding Diacritic
-	# e.g. for the diacritic-digraph gyo (ギョ) this will hold the uuid of the diacritic ki (ギ)
-	diacritic = models.ForeignKey('self', related_name='diacritic_uuid')
-	
-	# the id of the corresponding Digraph
-	# e.g. for the diacritic-digraph gyo (ギョ) this will hold the uuid of the digraph ki (キョ)
-	digraph = models.ForeignKey('self', related_name='digraph_uuid')
-	
-	corresponding_hiragana = models.ForeignKey('kannji_api.Hiragana')
+	corresponding_hiragana = models.OneToOneField('kannji_api.Hiragana', null=True)
