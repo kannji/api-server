@@ -21,3 +21,5 @@ def initialise(request):
 		
 		curr_hiragana.corresponding_katakana = curr_katakana
 		curr_hiragana.save()
+	
+	# TODO: make connections to the corresponding monograph. digraph adn diacritic
